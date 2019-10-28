@@ -1,0 +1,48 @@
+```python
+import json
+import folium
+import pandas as pd
+
+raw_data = [
+    ['강서구', 0.564],
+    ['금정구', 0.429],
+    ['기장군',0.459],
+    ['남구', 0.511],
+    ['동구', 0.6],
+    ['동래구', 0.0 ],
+    ['부산진구', 0.581],
+    ['북구', 0.389],
+    ['사상구', 0.673],
+    ['사하구', 0.581],
+    ['서구', 0.568],
+    ['수영구', 0.0],
+    ['연제구', 0.243],
+    ['영도구', 0.445],
+    ['중구', 0.3959],
+    ['해운대구', 0.544],
+
+    
+]
+
+data = pd.DataFrame(raw_data, columns=['name','value'])
+geo_json = 'https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2013/json/skorea_municipalities_geo_simple.json'
+m = folium.Map(
+    location=[35.17944, 129.07556],
+     tiles = 'Stamen Terrain',
+)
+
+folium.Choropleth(
+    geo_data=geo_json,
+    name = 'choropleth',
+    data = data,
+    columns = ['name','value'],
+    key_on = 'feature.properties.name',
+    fill_color = 'YlOrRd',
+    fill_opacity = 0.7,
+    line_opacity = 0.4,
+    ).add_to(m)
+
+
+m
+
+
